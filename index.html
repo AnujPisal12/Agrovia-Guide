@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agrovia – Platform Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest:   #1a4a2e;
+      --moss:     #2e6b42;
+      --leaf:     #4a9c63;
+      --wheat:    #e8b84b;
+      --sun:      #f5d78e;
+      --soil:     #5c3317;
+      --bark:     #8b5e3c;
+      --cream:    #faf6ec;
+      --sand:     #f0e8d6;
+      --white:    #ffffff;
+      --text:     #1e1e1e;
+      --muted:    #6b6b6b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem;
+      height: 64px;
+      background: rgba(26,74,46,0.97);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.18);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      color: var(--wheat);
+      letter-spacing: .04em;
+    }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--wheat); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--forest) 0%, #0e2e1c 60%, #071a0f 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a9c63' fill-opacity='0.06'%3E%3Cpath d='M50 50c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10S50 55.5 50 50zm-30 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10S20 55.5 20 50zm30-30c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10S50 25.5 50 20zm-30 0c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10S20 25.5 20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(232,184,75,.15); border: 1px solid rgba(232,184,75,.35);
+      color: var(--sun); font-size: .78rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .4rem 1.1rem; border-radius: 2rem; margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      color: var(--white);
+      line-height: 1.1;
+      max-width: 800px;
+    }
+    .hero h1 em { color: var(--wheat); font-style: italic; }
+    .hero-sub {
+      margin: 1.5rem auto 0;
+      font-size: 1.05rem; color: rgba(255,255,255,.65);
+      max-width: 560px; line-height: 1.7;
+    }
+    .hero-chain {
+      display: flex; align-items: center; gap: .6rem;
+      margin-top: 3rem; flex-wrap: wrap; justify-content: center;
+    }
+    .chain-node {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: .6rem;
+      padding: .55rem 1.1rem;
+      color: var(--white);
+      font-size: .82rem; font-weight: 500;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .chain-node .icon { font-size: 1.1rem; }
+    .chain-arrow { color: var(--wheat); font-size: 1.2rem; }
+    .scroll-hint {
+      margin-top: 3.5rem;
+      color: rgba(255,255,255,.35);
+      font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+    .scroll-hint span { font-size: 1.2rem; }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); opacity: .5; }
+      50%      { transform: translateY(6px); opacity: 1; }
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 24px; height: 2px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--muted); font-size: 1rem; line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ─── OVERVIEW CARDS ─── */
+    #overview { background: var(--sand); }
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .role-card {
+      background: var(--white);
+      border-radius: 1.2rem;
+      padding: 2rem 1.6rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      border-top: 4px solid;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none; color: inherit;
+      display: block;
+    }
+    .role-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,.1); }
+    .role-card .role-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .role-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+    .role-card p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+    .role-card.farmer { border-color: var(--leaf); }
+    .role-card.warehouse { border-color: var(--wheat); }
+    .role-card.retailer { border-color: var(--bark); }
+    .role-card.consumer { border-color: #5b8fd4; }
+
+    /* ─── STEP SECTION GENERIC ─── */
+    .step-section { border-radius: 2rem; margin: 0 -1rem; padding: 5rem 3rem; }
+    .step-header { display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+    .step-header-icon {
+      width: 72px; height: 72px; border-radius: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; flex-shrink: 0;
+    }
+    .steps-list { display: flex; flex-direction: column; gap: 1.6rem; }
+    .step-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-content { padding-top: .2rem; }
+    .step-content h4 { font-size: 1rem; font-weight: 600; margin-bottom: .4rem; }
+    .step-content p { font-size: .9rem; color: var(--muted); line-height: 1.65; }
+    .step-content .tip {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(0,0,0,.04); border-radius: .5rem;
+      padding: .3rem .7rem; font-size: .78rem; margin-top: .6rem;
+      font-weight: 500;
+    }
+
+    /* ─── FARMER SECTION ─── */
+    #farmer { background: var(--cream); }
+    .farmer-accent { color: var(--leaf); }
+    .farmer-accent::before { background: var(--leaf); }
+    .farmer-num { background: rgba(74,156,99,.15); color: var(--moss); }
+    .farmer-icon-bg { background: rgba(74,156,99,.12); }
+
+    /* ─── WAREHOUSE SECTION ─── */
+    #warehouse { background: #fffaee; }
+    .wh-accent { color: #c09022; }
+    .wh-accent::before { background: #c09022; }
+    .wh-num { background: rgba(232,184,75,.2); color: #8a6400; }
+    .wh-icon-bg { background: rgba(232,184,75,.15); }
+
+    /* ─── RETAILER SECTION ─── */
+    #retailer { background: #f5f0ea; }
+    .rt-accent { color: var(--soil); }
+    .rt-accent::before { background: var(--soil); }
+    .rt-num { background: rgba(92,51,23,.12); color: var(--soil); }
+    .rt-icon-bg { background: rgba(92,51,23,.1); }
+
+    /* ─── CONSUMER SECTION ─── */
+    #consumer { background: #eef2fa; }
+    .cs-accent { color: #3060b0; }
+    .cs-accent::before { background: #3060b0; }
+    .cs-num { background: rgba(91,143,212,.15); color: #2550a0; }
+    .cs-icon-bg { background: rgba(91,143,212,.12); }
+
+    /* ─── QR FLOW ─── */
+    #qr { background: var(--forest); color: var(--white); }
+    #qr .section-title { color: var(--white); }
+    #qr .section-desc { color: rgba(255,255,255,.6); }
+    #qr .section-label { color: var(--wheat); }
+    #qr .section-label::before { background: var(--wheat); }
+    .qr-flow {
+      display: flex; gap: 0; margin-top: 3rem; flex-wrap: wrap;
+    }
+    .qr-step {
+      flex: 1; min-width: 160px;
+      padding: 2rem 1.5rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      position: relative; text-align: center;
+      transition: background .2s;
+    }
+    .qr-step:first-child { border-radius: 1rem 0 0 1rem; }
+    .qr-step:last-child { border-radius: 0 1rem 1rem 0; }
+    .qr-step:hover { background: rgba(255,255,255,.09); }
+    .qr-step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--wheat); color: var(--forest);
+      font-size: .85rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto .9rem;
+    }
+    .qr-step .q-icon { font-size: 1.8rem; margin-bottom: .6rem; }
+    .qr-step h4 { font-size: .9rem; font-weight: 600; margin-bottom: .4rem; color: var(--sun); }
+    .qr-step p { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.55; }
+
+    /* ─── LOGIN CALLOUT ─── */
+    .login-callout {
+      background: linear-gradient(135deg, var(--forest), var(--moss));
+      border-radius: 1.2rem;
+      padding: 2rem 2.2rem;
+      margin-top: 3.5rem;
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    }
+    .login-callout .lc-icon {
+      font-size: 2.5rem; background: rgba(255,255,255,.1);
+      width: 60px; height: 60px; border-radius: .9rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .login-callout h4 { color: var(--white); font-size: 1rem; font-weight: 600; margin-bottom: .3rem; }
+    .login-callout p { color: rgba(255,255,255,.7); font-size: .875rem; line-height: 1.55; }
+    .lc-key {
+      margin-left: auto;
+      background: rgba(232,184,75,.2); border: 1px solid rgba(232,184,75,.4);
+      border-radius: .7rem; padding: .6rem 1.2rem; text-align: center;
+    }
+    .lc-key .key-label { font-size: .7rem; color: rgba(255,255,255,.5); letter-spacing: .1em; text-transform: uppercase; }
+    .lc-key .key-val { font-size: 1.3rem; font-weight: 700; color: var(--wheat); letter-spacing: .15em; }
+
+    /* ─── TIPS ─── */
+    #tips { background: var(--sand); }
+    .tips-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.4rem; margin-top: 2.5rem;
+    }
+    .tip-card {
+      background: var(--white); border-radius: 1rem;
+      padding: 1.6rem; box-shadow: 0 2px 14px rgba(0,0,0,.05);
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .tip-card .ti { font-size: 1.6rem; flex-shrink: 0; }
+    .tip-card h4 { font-size: .95rem; font-weight: 600; margin-bottom: .3rem; }
+    .tip-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0e2118;
+      padding: 3rem 2rem;
+      text-align: center;
+      color: rgba(255,255,255,.4);
+      font-size: .82rem;
+    }
+    footer .ft-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--wheat);
+      margin-bottom: .6rem;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width: 700px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .step-section { padding: 3rem 1.2rem; margin: 0; border-radius: 1rem; }
+      .qr-step { min-width: 140px; }
+      .login-callout { flex-direction: column; }
+      .lc-key { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🌿 Agrovia</div>
+  <ul class="nav-links">
+    <li><a href="#overview">Roles</a></li>
+    <li><a href="#farmer">For Farmers</a></li>
+    <li><a href="#warehouse">Operations</a></li>
+    <li><a href="#retailer">Retailer</a></li>
+    <li><a href="#consumer">Consumer</a></li>
+    <li><a href="#qr">QR Trace</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">📖 Platform User Guide</div>
+  <h1>How to use <em>Agrovia</em></h1>
+  <p class="hero-sub">A step-by-step guide for every stakeholder in our farm-to-consumer supply chain — from harvest to home.</p>
+  <div class="hero-chain">
+    <div class="chain-node"><span class="icon">🌾</span> Farmer delivers</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node"><span class="icon">🏭</span> Admin registers &amp; grades</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node"><span class="icon">🏪</span> Retail Kiosk</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-node"><span class="icon">🛒</span> Consumer</div>
+  </div>
+  <div class="scroll-hint">
+    <span>↓</span>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="section-inner">
+    <div class="section-label farmer-accent">Getting Started</div>
+    <h2 class="section-title">Who are you on Agrovia?</h2>
+    <p class="section-desc">Agrovia connects four key stakeholders in one centralized digital ecosystem. Choose your role below to jump to your guide.</p>
+    <div class="role-grid">
+      <a href="#farmer" class="role-card farmer">
+        <div class="role-icon">🌾</div>
+        <h3>Farmer</h3>
+        <p>Deliver your produce to the Agrovia warehouse. The admin registers your harvest and you get paid once quality testing is complete.</p>
+      </a>
+      <a href="#warehouse" class="role-card warehouse">
+        <div class="role-icon">🏭</div>
+        <h3>Operations / Warehouse Admin</h3>
+        <p>Register incoming harvests, generate QR batch IDs, run quality grading, manage inventory, and fulfill retailer orders.</p>
+      </a>
+      <a href="#retailer" class="role-card retailer">
+        <div class="role-icon">🏪</div>
+        <h3>Retailer / Kiosk</h3>
+        <p>Log into the POS system, receive dispatched stock, and sell to end consumers.</p>
+      </a>
+      <a href="#consumer" class="role-card consumer">
+        <div class="role-icon">🛒</div>
+        <h3>Consumer</h3>
+        <p>Buy fresh produce at Agrovia kiosks and scan QR codes to verify origin & freshness.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FARMER -->
+<section id="farmer">
+  <div class="section-inner">
+    <div class="step-section">
+      <div class="step-header">
+        <div class="step-header-icon farmer-icon-bg">🌾</div>
+        <div>
+          <div class="section-label farmer-accent">Role 1</div>
+          <h2 class="section-title">Farmer — How It Works</h2>
+          <p class="section-desc">Farmers don't have a separate dashboard login. The Warehouse Admin handles all digital registration on your behalf when you arrive at the facility.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(74,156,99,.1); border:1.5px solid rgba(74,156,99,.3); border-radius:1rem; padding:1.4rem 1.6rem; margin-bottom:2rem; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="font-size:1.6rem; flex-shrink:0;">ℹ️</div>
+        <div>
+          <p style="font-weight:600; color:var(--moss); margin-bottom:.3rem;">No App or Login Needed for Farmers</p>
+          <p style="font-size:.9rem; color:var(--muted); line-height:1.65;">Farmers simply show up at the Agrovia warehouse with their produce. The warehouse admin registers the harvest, runs quality grading, and the system automatically calculates your payout — fully transparent, no intermediaries.</p>
+        </div>
+      </div>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num farmer-num">1</div>
+          <div class="step-content">
+            <h4>Register with Agrovia (One-Time)</h4>
+            <p>First-time farmers provide their name, farm location, and bank details to the warehouse admin. The admin registers them in the system. Your name will appear in the <strong>"Select registered farmer"</strong> dropdown for all future transactions.</p>
+            <div class="tip">💡 This only needs to be done once — after registration you're in the system permanently.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num farmer-num">2</div>
+          <div class="step-content">
+            <h4>Deliver Your Produce to the Warehouse</h4>
+            <p>Bring your harvested produce in crates to your nearest Agrovia warehouse (Mumbai, Pune, or Satara). The warehouse admin will take over and handle the digital intake on the platform.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num farmer-num">3</div>
+          <div class="step-content">
+            <h4>Wait for Quality Grading</h4>
+            <p>Your produce is quality-tested by the admin. The grade (A, B, or C) determines the price — higher grade means higher payout. The system calculates your <strong>Farmer Payout</strong> automatically after grading.</p>
+            <div class="tip">📈 Grade A produce earns the highest payout rate; the pricing structure is fully transparent and visible on the platform.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num farmer-num">4</div>
+          <div class="step-content">
+            <h4>Receive Direct Payment</h4>
+            <p>Once grading is confirmed, your payout is processed directly to your registered bank account — no middlemen, no deductions. The exact Rs./kg rate is tied to the quality grade assigned to your batch.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num farmer-num">5</div>
+          <div class="step-content">
+            <h4>Log Out</h4>
+            <p>The Farmer role does not require a personal login — the warehouse admin handles data entry on your behalf. However, if a warehouse admin finishes a session on a shared device, they should click the <strong>profile icon</strong> in the top-right corner and select <strong>Logout</strong> to protect your farm records and payment data.</p>
+            <div class="tip">🔒 Always ensure the operations staff logs out of shared devices after registering your delivery.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAREHOUSE -->
+<section id="warehouse">
+  <div class="section-inner">
+    <div class="step-section">
+      <div class="step-header">
+        <div class="step-header-icon wh-icon-bg">🏭</div>
+        <div>
+          <div class="section-label wh-accent">Role 2</div>
+          <h2 class="section-title">Operations &amp; Warehouse Admin Guide</h2>
+          <p class="section-desc">As the admin, you are the hub of the entire supply chain — you register every harvest, grade every batch, and manage all inventory from intake to dispatch.</p>
+        </div>
+      </div>
+
+      <div class="login-callout">
+        <div class="lc-icon">🔑</div>
+        <div>
+          <h4>Login to the Operations Dashboard</h4>
+          <p>Go to <strong>agroviaa.vercel.app</strong>, select <strong>Operations Management</strong>, and enter the pass-key to unlock the full admin panel.</p>
+        </div>
+        <div class="lc-key">
+          <div class="key-label">Pass-Key</div>
+          <div class="key-val">PB2806</div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION A: Product Management → Farmer Intake -->
+      <div style="margin-top:3rem;">
+        <div style="display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem;">
+          <div style="background:rgba(232,184,75,.2); border-radius:.6rem; padding:.4rem .9rem; font-size:.75rem; font-weight:700; color:#8a6400; letter-spacing:.08em; text-transform:uppercase;">Section A</div>
+          <h3 style="font-size:1.15rem; font-weight:700;">Product Management → Farmer Intake</h3>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num wh-num">1</div>
+            <div class="step-content">
+              <h4>Open Farmer Intake</h4>
+              <p>From the left sidebar, click <strong>Product Management</strong>, then select the <strong>Farmer Intake</strong> tab. This opens the <em>New Harvest Registration</em> form.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">2</div>
+            <div class="step-content">
+              <h4>Fill in the Harvest Registration Form</h4>
+              <p>Complete all fields in the form:</p>
+              <div style="margin-top:.7rem; display:grid; gap:.5rem;">
+                <div style="background:rgba(0,0,0,.04); border-radius:.6rem; padding:.6rem .9rem; font-size:.875rem;"><strong>Product Selection</strong> — Choose the crop type from the dropdown (e.g. Cauliflower, Tomato, Lettuce)</div>
+                <div style="background:rgba(0,0,0,.04); border-radius:.6rem; padding:.6rem .9rem; font-size:.875rem;"><strong>Farmer Details</strong> — Select the registered farmer from the dropdown. Use the <strong>+</strong> button to register a new farmer on the spot if needed.</div>
+                <div style="background:rgba(0,0,0,.04); border-radius:.6rem; padding:.6rem .9rem; font-size:.875rem;"><strong>Harvest Date</strong> — Enter the actual harvest date (required field, marked with *)</div>
+                <div style="background:rgba(0,0,0,.04); border-radius:.6rem; padding:.6rem .9rem; font-size:.875rem;"><strong>Target Warehouse</strong> — Select the warehouse where this batch will be stored (Mumbai, Pune, or Satara)</div>
+                <div style="background:rgba(0,0,0,.04); border-radius:.6rem; padding:.6rem .9rem; font-size:.875rem;"><strong>Quantity (kg)</strong> — Enter the total weight of the produce delivered</div>
+                <div style="background:rgba(0,0,0,.04); border-radius:.6rem; padding:.6rem .9rem; font-size:.875rem;"><strong>Storage Method</strong> — Choose Normal Storage or Cold Storage from the dropdown</div>
+              </div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">3</div>
+            <div class="step-content">
+              <h4>Submit — Batch Created!</h4>
+              <p>Click <strong>Submit / Register Harvest</strong>. The system instantly generates a unique <strong>Batch ID</strong> (e.g. <code style="background:rgba(0,0,0,.07);padding:.1rem .4rem;border-radius:.3rem;font-size:.85rem;">BTH-MMM8ANF9-L27E</code>) and a <strong>QR code</strong> for the batch. The batch status is set to <em>Test Pending</em>.</p>
+              <div class="tip">🏷️ Print and attach the QR code label to the physical crates immediately after this step.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">4</div>
+            <div class="step-content">
+              <h4>Proceed to Quality Testing</h4>
+              <p>On the batch confirmation screen, click <strong>"Proceed to Quality Testing"</strong>. This takes you directly to the Quality Reports section with the new batch pre-loaded.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION B: Quality Reports -->
+      <div style="margin-top:3rem;">
+        <div style="display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem;">
+          <div style="background:rgba(232,184,75,.2); border-radius:.6rem; padding:.4rem .9rem; font-size:.75rem; font-weight:700; color:#8a6400; letter-spacing:.08em; text-transform:uppercase;">Section B</div>
+          <h3 style="font-size:1.15rem; font-weight:700;">Quality Reports</h3>
+        </div>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num wh-num">5</div>
+            <div class="step-content">
+              <h4>Open Quality Reports &amp; Select a Batch</h4>
+              <p>Click <strong>Quality Reports</strong> in the left sidebar. All batches with <em>Test Pending</em> status will appear in the list. Select the batch you want to test — you can search by Batch ID or farmer name.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">6</div>
+            <div class="step-content">
+              <h4>Grade the Batch Manually</h4>
+              <p>Physically inspect the produce and assign one of the three standard grades:</p>
+              <div style="display:flex; gap:.7rem; margin-top:.7rem; flex-wrap:wrap;">
+                <div style="flex:1; min-width:120px; background:rgba(74,156,99,.1); border:1px solid rgba(74,156,99,.3); border-radius:.7rem; padding:.8rem; text-align:center;">
+                  <div style="font-size:1.3rem; font-weight:700; color:var(--moss);">A</div>
+                  <div style="font-size:.78rem; color:var(--muted); margin-top:.2rem;">Premium Quality</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:rgba(232,184,75,.12); border:1px solid rgba(232,184,75,.4); border-radius:.7rem; padding:.8rem; text-align:center;">
+                  <div style="font-size:1.3rem; font-weight:700; color:#8a6400;">B</div>
+                  <div style="font-size:.78rem; color:var(--muted); margin-top:.2rem;">Standard Market Quality</div>
+                </div>
+                <div style="flex:1; min-width:120px; background:rgba(200,80,60,.08); border:1px solid rgba(200,80,60,.25); border-radius:.7rem; padding:.8rem; text-align:center;">
+                  <div style="font-size:1.3rem; font-weight:700; color:#a03020;">C</div>
+                  <div style="font-size:.78rem; color:var(--muted); margin-top:.2rem;">Below Standard</div>
+                </div>
+              </div>
+              <div class="tip">🔬 The AI scan feature is available for demonstration — in live operations, physical test results will determine the grade automatically.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">7</div>
+            <div class="step-content">
+              <h4>Confirm the Grade</h4>
+              <p>Once you've assigned a grade, click <strong>Confirm Grade</strong>. The system immediately calculates and displays the full <strong>Pricing Structure</strong> for that batch:</p>
+              <div style="display:flex; gap:.7rem; margin-top:.8rem; flex-wrap:wrap;">
+                <div style="flex:1; min-width:130px; background:rgba(74,156,99,.1); border-radius:.7rem; padding:.9rem; text-align:center;">
+                  <div style="font-size:.72rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.3rem;">Farmer Payout</div>
+                  <div style="font-size:1.2rem; font-weight:700; color:var(--moss);">Rs./kg</div>
+                  <div style="font-size:.75rem; color:var(--muted);">What farmer receives</div>
+                </div>
+                <div style="flex:1; min-width:130px; background:rgba(91,143,212,.1); border-radius:.7rem; padding:.9rem; text-align:center;">
+                  <div style="font-size:.72rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.3rem;">Warehouse Price</div>
+                  <div style="font-size:1.2rem; font-weight:700; color:#3060b0;">Rs./kg</div>
+                  <div style="font-size:.75rem; color:var(--muted);">Retailer purchase price</div>
+                </div>
+                <div style="flex:1; min-width:130px; background:rgba(150,80,180,.08); border-radius:.7rem; padding:.9rem; text-align:center;">
+                  <div style="font-size:.72rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.3rem;">Retailer Selling Price</div>
+                  <div style="font-size:1.2rem; font-weight:700; color:#7030a0;">Rs./kg</div>
+                  <div style="font-size:.75rem; color:var(--muted);">Customer price (incl. testing &amp; logistics)</div>
+                </div>
+              </div>
+              <div class="tip">💰 The Farmer Payout Impact section below the pricing confirms exactly how much the farmer earns from this batch.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION C: Warehouse Inventory -->
+      <div style="margin-top:3rem;">
+        <div style="display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem;">
+          <div style="background:rgba(232,184,75,.2); border-radius:.6rem; padding:.4rem .9rem; font-size:.75rem; font-weight:700; color:#8a6400; letter-spacing:.08em; text-transform:uppercase;">Section C</div>
+          <h3 style="font-size:1.15rem; font-weight:700;">Warehouse Inventory</h3>
+        </div>
+        <p style="font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; line-height:1.65;">Click <strong>Warehouse Inventory</strong> in the sidebar to get a live overview of all stock across your three warehouses — Mumbai, Pune, and Satara.</p>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num wh-num">8</div>
+            <div class="step-content">
+              <h4>Current Inventory Tab</h4>
+              <p>The default view shows all batches in stock, filterable by <strong>Fresh</strong>, <strong>Consume Soon</strong>, and <strong>Expired</strong>. Each batch entry shows produce name, Batch ID, farmer, quantity (kg), shelf-life status, and grade. Use the search bar to look up specific batches.</p>
+              <p style="margin-top:.5rem;">To look up any crate, type or scan the Batch ID into the <strong>Scan Barcode / QR Code</strong> field, or click <strong>Open Camera</strong> to scan a physical QR label with your device camera. The full tracking details and AI suggestions appear on the right panel.</p>
+              <div class="tip">📦 The top stat bar shows: Total Batches · Fresh Stock · Low Shelf-Life · Total Crates across all warehouses.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">9</div>
+            <div class="step-content">
+              <h4>Live Logistics Tab</h4>
+              <p>Switch to the <strong>Live Logistics</strong> tab to monitor the real-time delivery status of all dispatched batches. Track which batches are in transit, which have been delivered, and any delivery exceptions.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">10</div>
+            <div class="step-content">
+              <h4>Crate Management Tab</h4>
+              <p>Use the <strong>Crate Management</strong> tab to track the physical crates in circulation — which are at the warehouse, which are with retailers, and which need to be collected and returned.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">11</div>
+            <div class="step-content">
+              <h4>Orders Tab — Fulfill Retailer Orders</h4>
+              <p>When a retailer places a restocking request, it appears here under the <strong>Orders</strong> tab. Review the order, select the appropriate batches from inventory to fulfill it, and confirm dispatch. The retailer's kiosk inventory updates automatically once dispatch is confirmed.</p>
+              <div class="tip">🏪 Orders are tied to specific warehouse locations — Pune kiosks are fulfilled from Pune Warehouse stock, etc.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num wh-num">12</div>
+            <div class="step-content">
+              <h4>Log Out of the Operations Dashboard</h4>
+              <p>When your shift or session is complete, click the <strong>circular avatar / profile icon</strong> in the top-right corner of the dashboard and select <strong>Logout</strong>. This closes your authenticated session and protects sensitive operational and payment data.</p>
+              <div class="tip">🔒 Always log out when stepping away from a shared terminal — the dashboard contains farmer payment records and full inventory data.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RETAILER -->
+<section id="retailer">
+  <div class="section-inner">
+    <div class="step-section">
+      <div class="step-header">
+        <div class="step-header-icon rt-icon-bg">🏪</div>
+        <div>
+          <div class="section-label rt-accent">Role 3</div>
+          <h2 class="section-title">Retailer / Kiosk Guide</h2>
+          <p class="section-desc">Manage your Agrovia retail kiosk — from accepting stock to billing customers through the built-in POS. Each kiosk has its own unique pass-key and location.</p>
+        </div>
+      </div>
+
+      <div class="login-callout" style="background: linear-gradient(135deg, #3d1e0a, #6b3d1a);">
+        <div class="lc-icon">🔑</div>
+        <div>
+          <h4>Sign In to Your Kiosk Portal</h4>
+          <p>Go to <strong>agroviaa.vercel.app</strong>, select <strong>Retailer</strong>, and enter your kiosk's unique pass-key. At launch there are 3 warehouses (Mumbai, Pune, Satara) and multiple kiosks — each with their own credentials. After login you land on the <strong>Retailer Portal</strong> dashboard showing Live Inventory and Real-time Pricing.</p>
+        </div>
+        <div class="lc-key" style="border-color: rgba(139,94,60,.5); background: rgba(139,94,60,.2);">
+          <div class="key-label">Demo Pass-Key</div>
+          <div class="key-val" style="color: #d4a06a;">PB2806</div>
+        </div>
+      </div>
+
+      <!-- TAB A: Customer Billing POS -->
+      <div style="margin-top:3rem;">
+        <div style="display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem;">
+          <div style="background:rgba(92,51,23,.12); border-radius:.6rem; padding:.4rem .9rem; font-size:.75rem; font-weight:700; color:var(--soil); letter-spacing:.08em; text-transform:uppercase;">Tab A</div>
+          <h3 style="font-size:1.15rem; font-weight:700;">Customer Billing (POS)</h3>
+        </div>
+        <div class="steps-list">
+
+          <div class="step-item">
+            <div class="step-num rt-num">1</div>
+            <div class="step-content">
+              <h4>Open Customer Billing (POS)</h4>
+              <p>From the Retailer Portal header, click the <strong>Customer Billing (POS)</strong> tab. The POS screen has two panels: the left for entering customer & item details, and the right for the live <em>Current Bill</em>.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">2</div>
+            <div class="step-content">
+              <h4>Enter Customer Details</h4>
+              <p>In the <strong>Customer Details</strong> section, type the customer's phone number (e.g. <code>9730883800</code>) into the <em>Customer Phone</em> field.</p>
+              <div style="display:flex; gap:.8rem; margin-top:.8rem; flex-wrap:wrap;">
+                <div style="flex:1; min-width:180px; background:rgba(74,156,99,.08); border:1px solid rgba(74,156,99,.25); border-radius:.7rem; padding:.9rem;">
+                  <div style="font-size:.75rem; font-weight:700; color:var(--moss); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.4rem;">✅ Existing Member</div>
+                  <div style="font-size:.84rem; color:var(--muted); line-height:1.55;">The member's name and ID (e.g. <strong>AGV-883800</strong>) auto-appear with a <em>PREMIUM</em> badge. Members get automatic discounts applied to their Total to Pay.</div>
+                </div>
+                <div style="flex:1; min-width:180px; background:rgba(232,184,75,.08); border:1px solid rgba(232,184,75,.3); border-radius:.7rem; padding:.9rem;">
+                  <div style="font-size:.75rem; font-weight:700; color:#8a6400; text-transform:uppercase; letter-spacing:.07em; margin-bottom:.4rem;">🆕 New Customer</div>
+                  <div style="font-size:.84rem; color:var(--muted); line-height:1.55;">Click <strong>Create Member ID</strong> to register them on the spot. They'll get a unique Agrovia Member ID for future discounts.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">3</div>
+            <div class="step-content">
+              <h4>Add Items to Cart</h4>
+              <p>In the <strong>Add Items</strong> section, use the dropdown to <em>Scan QR or Select from your inventory</em> — choose the produce batch available in your kiosk stock. Alternatively, type the Batch ID directly into the text field below. Then enter the <strong>Quantity (kg)</strong> and click the blue <strong>+ Add to Cart</strong> button.</p>
+              <div class="tip">📦 Items shown as "Out of Stock" (e.g. Potato, Onion, Tomato) need to be restocked first via Inventory Procurement — see Tab B below.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">4</div>
+            <div class="step-content">
+              <h4>Review the Current Bill (Right Panel)</h4>
+              <p>The right-side panel shows a live <strong>Current Bill</strong> with each item, its Batch ID, weight, and price. For members, the discounted <strong>Total to Pay</strong> is displayed prominently in blue. Select the <strong>Payment Method</strong> (Cash or other options) from the dropdown.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">5</div>
+            <div class="step-content">
+              <h4>Checkout &amp; Note the Unique Bill Code</h4>
+              <p>Click the <strong>Checkout</strong> button. A bill is generated with a <strong>unique code</strong> and a <strong>QR code</strong>. Note down the unique code or hand the bill to the customer. The customer can use this code later in the Consumer portal to verify their purchase and trace produce origin.</p>
+              <div class="tip">🔍 Ask the customer to zoom in on the QR code on the bill for best scanning results with their phone camera.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">6</div>
+            <div class="step-content">
+              <h4>Log Out</h4>
+              <p>When done, click the <strong>circular avatar</strong> in the top-right corner of the screen and select <strong>Logout</strong> from the dropdown.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB B: Inventory Procurement -->
+      <div style="margin-top:3rem;">
+        <div style="display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem;">
+          <div style="background:rgba(92,51,23,.12); border-radius:.6rem; padding:.4rem .9rem; font-size:.75rem; font-weight:700; color:var(--soil); letter-spacing:.08em; text-transform:uppercase;">Tab B</div>
+          <h3 style="font-size:1.15rem; font-weight:700;">Inventory Procurement</h3>
+        </div>
+        <p style="font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; line-height:1.65;">If items are out of stock at your kiosk, use this tab to place a restocking order directly from a warehouse. Click <strong>Inventory Procurement</strong> in the portal header.</p>
+        <div class="steps-list">
+
+          <div class="step-item">
+            <div class="step-num rt-num">1</div>
+            <div class="step-content">
+              <h4>Place a Warehouse Order</h4>
+              <p>Under <strong>Place Warehouse Order</strong>, use the <em>Select Warehouse</em> dropdown to choose your supply warehouse (e.g. <strong>Pune Warehouse</strong>). Then pick the <strong>Product Batch</strong> from available stock and enter the <strong>Quantity in crates</strong>.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">2</div>
+            <div class="step-content">
+              <h4>Choose a Payment Option</h4>
+              <p>Select your preferred payment method from the <strong>Payment Option</strong> dropdown — either <em>Pay Instantly</em> (immediate payment on order) or <em>Pay Later</em> (credit arrangement). Then click <strong>Submit Order</strong>.</p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-num rt-num">3</div>
+            <div class="step-content">
+              <h4>Track Your Order in Recent Orders</h4>
+              <p>The right panel shows a <strong>Recent Orders</strong> list. Each order shows its Order ID (e.g. <code>ORD-MLHLP0B6-VFN8</code>), number of crates, source batch, warehouse, and payment status. Orders are fulfilled by the Operations team from the warehouse side and will update to <em>Fulfilled</em> once dispatched.</p>
+              <div class="tip">🏭 The Operations team must fulfill your order from their dashboard — stock will appear in your kiosk inventory once dispatched.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONSUMER -->
+<section id="consumer">
+  <div class="section-inner">
+    <div class="step-section">
+      <div class="step-header">
+        <div class="step-header-icon cs-icon-bg">🛒</div>
+        <div>
+          <div class="section-label cs-accent">Role 4</div>
+          <h2 class="section-title">Consumer Guide</h2>
+          <p class="section-desc">Your portal is the <strong>Customer &amp; Traceability Hub</strong> — verify your purchase, trace your produce, join as a member, and get support via the built-in chatbot.</p>
+        </div>
+      </div>
+
+      <!-- Nav overview -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:3rem;">
+        <div style="background:rgba(91,143,212,.08); border:1px solid rgba(91,143,212,.2); border-radius:.9rem; padding:1.1rem; text-align:center;">
+          <div style="font-size:1.6rem;">👤</div>
+          <div style="font-size:.82rem; font-weight:700; margin-top:.5rem; color:#2550a0;">Customer</div>
+          <div style="font-size:.75rem; color:var(--muted); margin-top:.3rem;">Verify bill & trace produce</div>
+        </div>
+        <div style="background:rgba(91,143,212,.08); border:1px solid rgba(91,143,212,.2); border-radius:.9rem; padding:1.1rem; text-align:center;">
+          <div style="font-size:1.6rem;">👥</div>
+          <div style="font-size:.82rem; font-weight:700; margin-top:.5rem; color:#2550a0;">Members</div>
+          <div style="font-size:.75rem; color:var(--muted); margin-top:.3rem;">View all registered members</div>
+        </div>
+        <div style="background:rgba(91,143,212,.08); border:1px solid rgba(91,143,212,.2); border-radius:.9rem; padding:1.1rem; text-align:center;">
+          <div style="font-size:1.6rem;">🗂️</div>
+          <div style="font-size:.82rem; font-weight:700; margin-top:.5rem; color:#2550a0;">Traceability</div>
+          <div style="font-size:.75rem; color:var(--muted); margin-top:.3rem;">Track produce by Batch ID</div>
+        </div>
+        <div style="background:rgba(91,143,212,.08); border:1px solid rgba(91,143,212,.2); border-radius:.9rem; padding:1.1rem; text-align:center;">
+          <div style="font-size:1.6rem;">🏅</div>
+          <div style="font-size:.82rem; font-weight:700; margin-top:.5rem; color:#2550a0;">Membership</div>
+          <div style="font-size:.75rem; color:var(--muted); margin-top:.3rem;">Buy a membership plan</div>
+        </div>
+        <div style="background:rgba(91,143,212,.08); border:1px solid rgba(91,143,212,.2); border-radius:.9rem; padding:1.1rem; text-align:center;">
+          <div style="font-size:1.6rem;">📷</div>
+          <div style="font-size:.82rem; font-weight:700; margin-top:.5rem; color:#2550a0;">Scan Product</div>
+          <div style="font-size:.75rem; color:var(--muted); margin-top:.3rem;">Camera scan the bill QR</div>
+        </div>
+        <div style="background:rgba(91,143,212,.08); border:1px solid rgba(91,143,212,.2); border-radius:.9rem; padding:1.1rem; text-align:center;">
+          <div style="font-size:1.6rem;">💬</div>
+          <div style="font-size:.82rem; font-weight:700; margin-top:.5rem; color:#2550a0;">Chatbot</div>
+          <div style="font-size:.75rem; color:var(--muted); margin-top:.3rem;">Rule-based support assistant</div>
+        </div>
+      </div>
+
+      <div class="steps-list">
+
+        <div class="step-item">
+          <div class="step-num cs-num">1</div>
+          <div class="step-content">
+            <h4>Verify Your Purchase — Customer Tab</h4>
+            <p>On the <strong>Customer</strong> tab you'll see a <em>Verify Your Purchase</em> card. Take the <strong>unique bill code</strong> given to you at the kiosk counter after checkout, enter it into the <em>Enter bill code</em> field, and click the search icon. Your purchase details and product quality information will appear instantly.</p>
+            <div class="tip">🧾 Find your 8-character code at the bottom of your receipt, near the barcode — look for it printed clearly under the QR.</div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num cs-num">2</div>
+          <div class="step-content">
+            <h4>Scan the Bill QR — Scan QR Code Button</h4>
+            <p>Instead of typing the code, tap the <strong>Scan QR Code</strong> button (top-right of the Customer tab). Point your camera at the QR code printed on your receipt — zoom in for best results. The system will auto-fill and verify the code for you.</p>
+            <div class="tip">🔍 You can also use the <strong>Scan Product</strong> option from the left sidebar as an alternative entry point for scanning.</div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num cs-num">3</div>
+          <div class="step-content">
+            <h4>Trace Your Produce — Traceability Tab</h4>
+            <p>Click the <strong>Traceability</strong> tab (or select <em>Traceability</em> from the left navbar). Enter a <strong>Batch ID</strong> (found on your receipt or the product label, e.g. <code>BTH-MMM8ANF9-L27E</code>). The platform shows you the complete journey of that produce — farmer origin, harvest date, quality grade, warehouse entry, and kiosk delivery.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num cs-num">4</div>
+          <div class="step-content">
+            <h4>Join as a Member — Membership Tab</h4>
+            <p>Click <strong>Membership</strong> in the left sidebar to view available membership plans. Select a plan and register with your phone number to get your unique Agrovia Member ID. Once enrolled, you'll automatically receive <strong>discounted pricing</strong> at any Agrovia kiosk POS — just give the kiosk operator your phone number at billing.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num cs-num">5</div>
+          <div class="step-content">
+            <h4>View All Members — Members Tab</h4>
+            <p>The <strong>Members</strong> tab lets you look up registered Agrovia members. Kiosk operators and customers can confirm membership status and details here.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num cs-num">6</div>
+          <div class="step-content">
+            <h4>Get Help — Built-In Chatbot</h4>
+            <p>See the chat bubble icon in the bottom-right corner of the portal? That's Agrovia's <strong>rule-based support chatbot</strong>. Click it to get instant answers to common questions — about membership, traceability, kiosk locations, billing queries, and more. No waiting, no phone calls.</p>
+            <div class="tip">🤖 The chatbot is rule-based and designed to handle the most frequent customer queries quickly and accurately.</div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num cs-num">7</div>
+          <div class="step-content">
+            <h4>Log Out of the Consumer Portal</h4>
+            <p>Once you're done verifying your purchase or managing your membership, click the <strong>profile / avatar icon</strong> in the top-right corner of the portal and select <strong>Logout</strong>. This is especially important if you're using a shared kiosk terminal or a public device.</p>
+            <div class="tip">🔒 Logging out protects your Agrovia Member ID and purchase history from being accessed by others.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QR FLOW -->
+<section id="qr">
+  <div class="section-inner">
+    <div class="section-label">🔍 Traceability</div>
+    <h2 class="section-title">How QR Traceability Works</h2>
+    <p class="section-desc">Every crate that enters the Agrovia system gets a unique QR-coded Batch ID. Here's the full lifecycle of that code:</p>
+    <div class="qr-flow">
+      <div class="qr-step">
+        <div class="qr-step-num">1</div>
+        <div class="q-icon">🌾</div>
+        <h4>Farmer Arrival</h4>
+        <p>Produce logged with farmer ID, crop type, quantity & harvest date</p>
+      </div>
+      <div class="qr-step">
+        <div class="qr-step-num">2</div>
+        <div class="q-icon">🔬</div>
+        <h4>Quality Test</h4>
+        <p>Standardized inspection; results recorded in the digital audit trail</p>
+      </div>
+      <div class="qr-step">
+        <div class="qr-step-num">3</div>
+        <div class="q-icon">🏷️</div>
+        <h4>QR Generated</h4>
+        <p>Unique Batch ID + QR code printed and applied to each approved crate</p>
+      </div>
+      <div class="qr-step">
+        <div class="qr-step-num">4</div>
+        <div class="q-icon">📦</div>
+        <h4>Storage & Dispatch</h4>
+        <p>Crate tracked through warehouse storage and outbound dispatch</p>
+      </div>
+      <div class="qr-step">
+        <div class="qr-step-num">5</div>
+        <div class="q-icon">🏪</div>
+        <h4>Kiosk Receipt</h4>
+        <p>Retailer scans to confirm receipt; inventory updated automatically</p>
+      </div>
+      <div class="qr-step">
+        <div class="qr-step-num">6</div>
+        <div class="q-icon">📱</div>
+        <h4>Consumer Scan</h4>
+        <p>Buyer scans QR to view full origin, quality grade & farm story</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips">
+  <div class="section-inner">
+    <div class="section-label farmer-accent">Pro Tips</div>
+    <h2 class="section-title">Helpful Tips for All Users</h2>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="ti">🌐</div>
+        <div>
+          <h4>Access the Live Platform</h4>
+          <p>The live MVP is available at <strong>agroviaa.vercel.app</strong> — works on any modern browser, desktop or mobile.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="ti">🔑</div>
+        <div>
+          <h4>Operations / Retailer Login</h4>
+          <p>The shared pass-key for Operations Management and Retailer roles is <strong>PB2806</strong>. Keep this secure.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="ti">📊</div>
+        <div>
+          <h4>Analytics Dashboard</h4>
+          <p>Operations staff can view real-time KPIs and charts on the Streamlit-powered analytics tab within the dashboard.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="ti">📱</div>
+        <div>
+          <h4>QR Scanning</h4>
+          <p>No special app needed — any smartphone camera pointing at an Agrovia QR code will open the trace page in-browser.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="ti">💳</div>
+        <div>
+          <h4>Payments (Coming Soon)</h4>
+          <p>Google Pay integration for instant secure farmer payments is in the roadmap — currently processed through bank transfer.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="ti">🗺️</div>
+        <div>
+          <h4>Kiosk Locator (Coming Soon)</h4>
+          <p>A Maps API integration will let consumers find the nearest Agrovia kiosk and route to it directly from the platform.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">🌿 Agrovia</div>
+  <p>A transparent, quality-driven agricultural supply chain platform.</p>
+  <p style="margin-top:.5rem;">Connecting Farmers · Warehouses · Retailers · Consumers</p>
+  <p style="margin-top:1.2rem; font-size:.75rem; opacity:.5;">Team Koestler · Sustainability & Environment · Software (Supply Chain)</p>
+</footer>
+
+</body>
+</html>
